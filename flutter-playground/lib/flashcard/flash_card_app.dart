@@ -22,6 +22,7 @@ class FlashCardScreenState extends State<FlashCardScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   bool isFront = true;
+  double dragStartX = 0.0;
 
   @override
   void initState() {
@@ -38,15 +39,25 @@ class FlashCardScreenState extends State<FlashCardScreen>
     super.dispose();
   }
 
-  void flipCard() {
-    if (isFront) {
-      _controller.forward();
-    } else {
-      _controller.reverse();
+  void onDragStart(DragStartDetails details) {
+    dragStartX = details.globalPosition.dx;
+  }
+
+  void onDragEnd(DragEndDetails details) {
+    final dragEndX = details.velocity.pixelsPerSecond.dx;
+    final dragDistance = dragEndX - dragStartX;
+    print('dragDistance: ${dragDistance.abs()}');
+    if (dragDistance.abs() > 50) {
+      // Threshold for considering it a swipe
+      if (isFront) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+      setState(() {
+        isFront = !isFront;
+      });
     }
-    setState(() {
-      isFront = !isFront;
-    });
   }
 
   @override
@@ -69,7 +80,8 @@ class FlashCardScreenState extends State<FlashCardScreen>
               content: card.content,
               controller: _controller,
               isFront: isFront,
-              onFlip: flipCard,
+              onDragStart: onDragStart,
+              onDragEnd: onDragEnd,
             );
           } else {
             return NormalCardWidget(content: card.content);
@@ -84,19 +96,22 @@ class FlashCardWidget extends StatelessWidget {
   final String content;
   final AnimationController controller;
   final bool isFront;
-  final VoidCallback onFlip;
+  final Function(DragStartDetails) onDragStart;
+  final Function(DragEndDetails) onDragEnd;
 
   const FlashCardWidget({
     required this.content,
     required this.controller,
     required this.isFront,
-    required this.onFlip,
+    required this.onDragStart,
+    required this.onDragEnd,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onFlip,
+      onHorizontalDragStart: onDragStart,
+      onHorizontalDragEnd: onDragEnd,
       child: AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
@@ -104,21 +119,15 @@ class FlashCardWidget extends StatelessWidget {
           return Transform(
             transform: Matrix4.rotationY(angle),
             alignment: Alignment.center,
-            child: isFront
-                ? const Card(
-                    color: Colors.blueAccent,
-                    child: SizedBox(
-                      height: 150,
-                      child: Center(child: Text('Tap to Flip')),
-                    ),
-                  )
-                : Card(
-                    color: Colors.orangeAccent,
-                    child: SizedBox(
-                      height: 150,
-                      child: Center(child: Text(content)),
-                    ),
-                  ),
+            child: Card(
+              color: isFront ? Colors.blueAccent : Colors.orangeAccent,
+              child: SizedBox(
+                height: 150,
+                child: Center(
+                  child: Text(isFront ? 'Swipe to Flip' : content),
+                ),
+              ),
+            ),
           );
         },
       ),
