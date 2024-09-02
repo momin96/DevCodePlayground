@@ -23,6 +23,7 @@ class FlashCardScreenState extends State<FlashCardScreen>
   late AnimationController _controller;
   bool isFront = true;
   double _dragPosition = 0.0;
+  final double maxDragDistance = 200.0;
 
   @override
   void initState() {
@@ -41,23 +42,31 @@ class FlashCardScreenState extends State<FlashCardScreen>
 
   void onDragUpdate(DragUpdateDetails details) {
     setState(() {
-      _dragPosition += details.delta.dx;
-      _controller.value = (_dragPosition / 150).clamp(-1.0, 1.0).abs();
+      if (isFront) {
+        _dragPosition += details.delta.dx;
+      } else {
+        _dragPosition -= details.delta.dx;
+      }
+      _controller.value =
+          (_dragPosition / maxDragDistance).clamp(0.0, 1.0).abs();
+      print("GestureDetector onDragUpdate  $_dragPosition ${details.delta.dx}");
     });
   }
 
   void onDragEnd(DragEndDetails details) {
     if (_controller.value > 0.5) {
-      _controller.animateTo(1.0, duration: Duration(milliseconds: 200));
+      _controller.forward(from: _controller.value);
       setState(() {
-        isFront = !isFront;
+        isFront = false;
+        _dragPosition = maxDragDistance;
       });
     } else {
-      _controller.animateTo(0.0, duration: Duration(milliseconds: 200));
+      _controller.reverse(from: _controller.value);
+      setState(() {
+        isFront = true;
+        _dragPosition = 0.0; // Reset only when flipping to front
+      });
     }
-    setState(() {
-      _dragPosition = 0.0;
-    });
   }
 
   @override
@@ -116,19 +125,18 @@ class FlashCardWidget extends StatelessWidget {
         animation: controller,
         builder: (context, child) {
           final angle = controller.value * 3.1416;
+          final isFlipped = angle > 1.57 || angle < -1.57;
+          print("GestureDetector ${controller.value} $angle $isFlipped");
           return Transform(
             transform: Matrix4.rotationY(angle),
             alignment: Alignment.center,
             child: Card(
-              color:
-                  angle.abs() < 1.57 ? Colors.blueAccent : Colors.orangeAccent,
+              color: isFlipped ? Colors.orangeAccent : Colors.blueAccent,
               child: SizedBox(
                 height: 150,
                 child: Center(
                   child: Text(
-                    angle.abs() < 1.57
-                        ? 'Front: Drag to flip'
-                        : 'Back: $content',
+                    isFlipped ? 'Back: $content' : 'Front: Drag to flip',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
