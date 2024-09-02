@@ -23,6 +23,7 @@ class FlashCardScreenState extends State<FlashCardScreen>
   late AnimationController _controller;
   bool isFront = true;
   double dragStartX = 0.0;
+  double _dragPosition = 0.0;
 
   @override
   void initState() {
@@ -43,21 +44,25 @@ class FlashCardScreenState extends State<FlashCardScreen>
     dragStartX = details.globalPosition.dx;
   }
 
+  void onDragUpdate(DragUpdateDetails details) {
+    setState(() {
+      _dragPosition += details.delta.dx;
+      _controller.value = (_dragPosition / 150).clamp(-1.0, 1.0).abs();
+    });
+  }
+
   void onDragEnd(DragEndDetails details) {
-    final dragEndX = details.velocity.pixelsPerSecond.dx;
-    final dragDistance = dragEndX - dragStartX;
-    print('dragDistance: ${dragDistance.abs()}');
-    if (dragDistance.abs() > 50) {
-      // Threshold for considering it a swipe
-      if (isFront) {
-        _controller.forward();
-      } else {
-        _controller.reverse();
-      }
+    if (_controller.value > 0.5) {
+      _controller.animateTo(1.0, duration: Duration(milliseconds: 200));
       setState(() {
         isFront = !isFront;
       });
+    } else {
+      _controller.animateTo(0.0, duration: Duration(milliseconds: 200));
     }
+    setState(() {
+      _dragPosition = 0.0;
+    });
   }
 
   @override
@@ -80,7 +85,7 @@ class FlashCardScreenState extends State<FlashCardScreen>
               content: card.content,
               controller: _controller,
               isFront: isFront,
-              onDragStart: onDragStart,
+              onDragUpdate: onDragUpdate,
               onDragEnd: onDragEnd,
             );
           } else {
@@ -96,21 +101,21 @@ class FlashCardWidget extends StatelessWidget {
   final String content;
   final AnimationController controller;
   final bool isFront;
-  final Function(DragStartDetails) onDragStart;
+  final Function(DragUpdateDetails) onDragUpdate;
   final Function(DragEndDetails) onDragEnd;
 
   const FlashCardWidget({
     required this.content,
     required this.controller,
     required this.isFront,
-    required this.onDragStart,
+    required this.onDragUpdate,
     required this.onDragEnd,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onHorizontalDragStart: onDragStart,
+      onHorizontalDragUpdate: onDragUpdate,
       onHorizontalDragEnd: onDragEnd,
       child: AnimatedBuilder(
         animation: controller,
@@ -120,11 +125,17 @@ class FlashCardWidget extends StatelessWidget {
             transform: Matrix4.rotationY(angle),
             alignment: Alignment.center,
             child: Card(
-              color: isFront ? Colors.blueAccent : Colors.orangeAccent,
+              color:
+                  angle.abs() < 1.57 ? Colors.blueAccent : Colors.orangeAccent,
               child: SizedBox(
                 height: 150,
                 child: Center(
-                  child: Text(isFront ? 'Swipe to Flip' : content),
+                  child: Text(
+                    angle.abs() < 1.57
+                        ? 'Front: Drag to flip'
+                        : 'Back: $content',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ),
