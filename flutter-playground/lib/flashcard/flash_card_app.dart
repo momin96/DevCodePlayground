@@ -22,7 +22,6 @@ class FlashCardScreenState extends State<FlashCardScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   bool isFront = true;
-  double dragStartX = 0.0;
   double _dragPosition = 0.0;
 
   @override
@@ -38,10 +37,6 @@ class FlashCardScreenState extends State<FlashCardScreen>
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-
-  void onDragStart(DragStartDetails details) {
-    dragStartX = details.globalPosition.dx;
   }
 
   void onDragUpdate(DragUpdateDetails details) {
