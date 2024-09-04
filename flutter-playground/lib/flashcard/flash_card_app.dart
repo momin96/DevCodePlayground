@@ -42,14 +42,27 @@ class FlashCardScreenState extends State<FlashCardScreen>
 
   void onDragUpdate(DragUpdateDetails details) {
     setState(() {
+      bool isDraggingRightToLeft = details.delta.dx < 0;
+
       if (isFront) {
-        _dragPosition += details.delta.dx;
+        if (isDraggingRightToLeft) {
+          _dragPosition -= details.delta.dx;
+        } else {
+          _dragPosition += details.delta.dx;
+        }
       } else {
-        _dragPosition -= details.delta.dx;
+        if (isDraggingRightToLeft) {
+          _dragPosition += details.delta.dx;
+        } else {
+          _dragPosition -= details.delta.dx;
+        }
       }
+
       _controller.value =
           (_dragPosition / maxDragDistance).clamp(0.0, 1.0).abs();
-      print("GestureDetector onDragUpdate  $_dragPosition ${details.delta.dx}");
+
+      print(
+          "Dragging ${isDraggingRightToLeft ? 'RTL' : 'LTR'} dx ${details.delta.dx} value ${_controller.value} dragPosition ${_dragPosition}");
     });
   }
 
@@ -58,13 +71,13 @@ class FlashCardScreenState extends State<FlashCardScreen>
       _controller.forward(from: _controller.value);
       setState(() {
         isFront = false;
-        _dragPosition = maxDragDistance;
+        _dragPosition = maxDragDistance * _controller.value;
       });
     } else {
       _controller.reverse(from: _controller.value);
       setState(() {
         isFront = true;
-        _dragPosition = 0.0; // Reset only when flipping to front
+        _dragPosition = maxDragDistance * _controller.value;
       });
     }
   }
