@@ -104,6 +104,7 @@ class FlashCardScreenState extends State<FlashCardScreen>
               isFront: isFront,
               onDragUpdate: onDragUpdate,
               onDragEnd: onDragEnd,
+              dragPosition: _dragPosition,
             );
           } else {
             return NormalCardWidget(content: card.content);
@@ -120,6 +121,7 @@ class FlashCardWidget extends StatelessWidget {
   final bool isFront;
   final Function(DragUpdateDetails) onDragUpdate;
   final Function(DragEndDetails) onDragEnd;
+  final double dragPosition;
 
   const FlashCardWidget({
     required this.content,
@@ -127,6 +129,7 @@ class FlashCardWidget extends StatelessWidget {
     required this.isFront,
     required this.onDragUpdate,
     required this.onDragEnd,
+    required this.dragPosition,
   });
 
   @override
@@ -137,10 +140,12 @@ class FlashCardWidget extends StatelessWidget {
       child: AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
-          final angle = controller.value * 3.1416;
-          final isFlipped = angle > 1.57 || angle < -1.57;
+          final angle = (controller.value * 3.1416) * dragPosition.sign;
+          final transform = Matrix4.identity()
+            ..setEntry(3, 2, 0.001)
+            ..rotateY(angle);
           return Transform(
-            transform: Matrix4.rotationY(angle),
+            transform: transform,
             alignment: Alignment.center,
             child: Card(
               elevation: 8,
@@ -149,19 +154,22 @@ class FlashCardWidget extends StatelessWidget {
               ),
               child: Container(
                 height: 150,
+                width: 300,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: isFlipped
-                        ? [Colors.orange[300]!, Colors.orange[700]!]
-                        : [Colors.blue[300]!, Colors.blue[700]!],
+                    colors: angle.abs() < 1.57
+                        ? [Colors.blue[300]!, Colors.blue[700]!]
+                        : [Colors.orange[300]!, Colors.orange[700]!],
                   ),
                 ),
                 child: Center(
                   child: Text(
-                    isFlipped ? 'Back: $content' : 'Front: Drag to flip',
+                    angle.abs() < 1.57
+                        ? 'Front: Drag to flip'
+                        : 'Back: $content',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
