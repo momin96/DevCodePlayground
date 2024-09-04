@@ -139,18 +139,34 @@ class FlashCardWidget extends StatelessWidget {
         builder: (context, child) {
           final angle = controller.value * 3.1416;
           final isFlipped = angle > 1.57 || angle < -1.57;
-          print("GestureDetector ${controller.value} $angle $isFlipped");
           return Transform(
             transform: Matrix4.rotationY(angle),
             alignment: Alignment.center,
             child: Card(
-              color: isFlipped ? Colors.orangeAccent : Colors.blueAccent,
-              child: SizedBox(
+              elevation: 8,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Container(
                 height: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: isFlipped
+                        ? [Colors.orange[300]!, Colors.orange[700]!]
+                        : [Colors.blue[300]!, Colors.blue[700]!],
+                  ),
+                ),
                 child: Center(
                   child: Text(
                     isFlipped ? 'Back: $content' : 'Front: Drag to flip',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
