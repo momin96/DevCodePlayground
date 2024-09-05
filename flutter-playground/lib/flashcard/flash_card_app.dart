@@ -18,18 +18,54 @@ class FlashCardScreen extends StatefulWidget {
   FlashCardScreenState createState() => FlashCardScreenState();
 }
 
-class FlashCardScreenState extends State<FlashCardScreen>
+class FlashCardScreenState extends State<FlashCardScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final List<CardItem> cards = [
+      CardItem(type: CardType.normal, content: 'Normal Card 1'),
+      CardItem(type: CardType.flash, content: 'Flash Card 1'),
+      CardItem(type: CardType.normal, content: 'Normal Card 2'),
+      CardItem(type: CardType.flash, content: 'Flash Card 2'),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flash Cards')),
+      body: ListView.builder(
+        itemCount: cards.length,
+        itemBuilder: (context, index) {
+          final card = cards[index];
+          if (card.type == CardType.flash) {
+            return IndividualFlashCard(card: card);
+          } else {
+            return NormalCardWidget(content: card.content);
+          }
+        },
+      ),
+    );
+  }
+}
+
+class IndividualFlashCard extends StatefulWidget {
+  final CardItem card;
+
+  const IndividualFlashCard({Key? key, required this.card}) : super(key: key);
+
+  @override
+  _IndividualFlashCardState createState() => _IndividualFlashCardState();
+}
+
+class _IndividualFlashCardState extends State<IndividualFlashCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   bool isFront = true;
   double _dragPosition = 0.0;
-  final double maxDragDistance = 200.0;
+  final double maxDragDistance = 100.0;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 2500), // Changed to 2.5 seconds
       vsync: this,
     );
   }
@@ -60,9 +96,6 @@ class FlashCardScreenState extends State<FlashCardScreen>
 
       _controller.value =
           (_dragPosition / maxDragDistance).clamp(0.0, 1.0).abs();
-
-      print(
-          "Dragging ${isDraggingRightToLeft ? 'RTL' : 'LTR'} dx ${details.delta.dx} value ${_controller.value} dragPosition ${_dragPosition}");
     });
   }
 
@@ -84,33 +117,12 @@ class FlashCardScreenState extends State<FlashCardScreen>
 
   @override
   Widget build(BuildContext context) {
-    final List<CardItem> cards = [
-      CardItem(type: CardType.normal, content: 'Normal Card 1'),
-      CardItem(type: CardType.flash, content: 'Flash Card 1'),
-      CardItem(type: CardType.normal, content: 'Normal Card 2'),
-      CardItem(type: CardType.flash, content: 'Flash Card 2'),
-    ];
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('Flash Cards')),
-      body: ListView.builder(
-        itemCount: cards.length,
-        itemBuilder: (context, index) {
-          final card = cards[index];
-          if (card.type == CardType.flash) {
-            return FlashCardWidget(
-              content: card.content,
-              controller: _controller,
-              isFront: isFront,
-              onDragUpdate: onDragUpdate,
-              onDragEnd: onDragEnd,
-              dragPosition: _dragPosition,
-            );
-          } else {
-            return NormalCardWidget(content: card.content);
-          }
-        },
-      ),
+    return FlashCardWidget(
+      content: widget.card.content,
+      controller: _controller,
+      onDragUpdate: onDragUpdate,
+      onDragEnd: onDragEnd,
+      dragPosition: _dragPosition,
     );
   }
 }
@@ -118,7 +130,6 @@ class FlashCardScreenState extends State<FlashCardScreen>
 class FlashCardWidget extends StatelessWidget {
   final String content;
   final AnimationController controller;
-  final bool isFront;
   final Function(DragUpdateDetails) onDragUpdate;
   final Function(DragEndDetails) onDragEnd;
   final double dragPosition;
@@ -126,7 +137,6 @@ class FlashCardWidget extends StatelessWidget {
   const FlashCardWidget({
     required this.content,
     required this.controller,
-    required this.isFront,
     required this.onDragUpdate,
     required this.onDragEnd,
     required this.dragPosition,
