@@ -12,6 +12,7 @@
 		504B5C7E2C91499400234F39 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504B5C7D2C91499400234F39 /* Item.swift */; };
 		504B5C802C91499600234F39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504B5C7F2C91499600234F39 /* Assets.xcassets */; };
 		504B5C832C91499600234F39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504B5C822C91499600234F39 /* Preview Assets.xcassets */; };
+		504B5C8E2C914E5000234F39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 504B5C8D2C914E5000234F39 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		504B5C822C91499600234F39 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		504B5C892C914A3C00234F39 /* config_dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config_dev.xcconfig; sourceTree = "<group>"; };
 		504B5C8A2C914A5500234F39 /* config_prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config_prod.xcconfig; sourceTree = "<group>"; };
+		504B5C8D2C914E5000234F39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +43,7 @@
 			children = (
 				504B5C892C914A3C00234F39 /* config_dev.xcconfig */,
 				504B5C8A2C914A5500234F39 /* config_prod.xcconfig */,
+				504B5C8D2C914E5000234F39 /* GoogleService-Info.plist */,
 				504B5C782C91499400234F39 /* Find It Fast */,
 				504B5C772C91499400234F39 /* Products */,
 			);
@@ -133,6 +136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				504B5C832C91499600234F39 /* Preview Assets.xcassets in Resources */,
+				504B5C8E2C914E5000234F39 /* GoogleService-Info.plist in Resources */,
 				504B5C802C91499600234F39 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
