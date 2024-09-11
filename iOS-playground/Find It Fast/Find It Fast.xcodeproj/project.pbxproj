@@ -21,6 +21,8 @@
 		504B5C7D2C91499400234F39 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		504B5C7F2C91499600234F39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504B5C822C91499600234F39 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		504B5C892C914A3C00234F39 /* config_dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config_dev.xcconfig; sourceTree = "<group>"; };
+		504B5C8A2C914A5500234F39 /* config_prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config_prod.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +39,8 @@
 		504B5C6D2C91499400234F39 = {
 			isa = PBXGroup;
 			children = (
+				504B5C892C914A3C00234F39 /* config_dev.xcconfig */,
+				504B5C8A2C914A5500234F39 /* config_prod.xcconfig */,
 				504B5C782C91499400234F39 /* Find It Fast */,
 				504B5C772C91499400234F39 /* Products */,
 			);
