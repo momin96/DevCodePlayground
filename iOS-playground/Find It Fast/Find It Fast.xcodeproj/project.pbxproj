@@ -18,6 +18,7 @@
 		504B5C972C94472A00234F39 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 504B5C962C94472A00234F39 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		504B5C992C94472A00234F39 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 504B5C982C94472A00234F39 /* FirebaseAppCheck */; };
 		504B5C9B2C94472A00234F39 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 504B5C9A2C94472A00234F39 /* FirebaseAppDistribution-Beta */; };
+		504B5C9E2C94783400234F39 /* Find-It-Fast-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 504B5C9D2C94783300234F39 /* Find-It-Fast-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,8 @@
 		504B5C892C914A3C00234F39 /* config_dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config_dev.xcconfig; sourceTree = "<group>"; };
 		504B5C8A2C914A5500234F39 /* config_prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config_prod.xcconfig; sourceTree = "<group>"; };
 		504B5C8D2C914E5000234F39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		504B5C9D2C94783300234F39 /* Find-It-Fast-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Find-It-Fast-Info.plist"; sourceTree = "<group>"; };
+		504B5C9F2C9478DB00234F39 /* Find-It-Fast-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Find-It-Fast-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +73,8 @@
 		504B5C782C91499400234F39 /* Find It Fast */ = {
 			isa = PBXGroup;
 			children = (
+				504B5C9F2C9478DB00234F39 /* Find-It-Fast-Info.plist */,
+				504B5C9D2C94783300234F39 /* Find-It-Fast-Info.plist */,
 				504B5C792C91499400234F39 /* Find_It_FastApp.swift */,
 				504B5C7B2C91499400234F39 /* ContentView.swift */,
 				504B5C7D2C91499400234F39 /* Item.swift */,
@@ -155,6 +160,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				504B5C9E2C94783400234F39 /* Find-It-Fast-Info.plist in Resources */,
 				504B5C832C91499600234F39 /* Preview Assets.xcassets in Resources */,
 				504B5C8E2C914E5000234F39 /* GoogleService-Info.plist in Resources */,
 				504B5C802C91499600234F39 /* Assets.xcassets in Resources */,
@@ -179,6 +185,7 @@
 /* Begin XCBuildConfiguration section */
 		504B5C842C91499600234F39 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 504B5C892C914A3C00234F39 /* config_dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -242,6 +249,7 @@
 		};
 		504B5C852C91499600234F39 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 504B5C8A2C914A5500234F39 /* config_prod.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -298,6 +306,7 @@
 		};
 		504B5C872C91499600234F39 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 504B5C892C914A3C00234F39 /* config_dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -306,6 +315,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Find It Fast/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Find-It-Fast-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -326,6 +336,7 @@
 		};
 		504B5C882C91499600234F39 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 504B5C8A2C914A5500234F39 /* config_prod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -334,6 +345,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Find It Fast/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Find-It-Fast-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
