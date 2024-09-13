@@ -8,7 +8,17 @@
 import SwiftUI
 import SwiftData
 
+class ViewModel: ObservableObject {
+    init() {
+        
+    }
+}
+
+
 struct ContentView: View {
+    
+    @StateObject var viewModel = ViewModel()
+    
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
 
@@ -58,4 +68,56 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .modelContainer(for: Item.self, inMemory: true)
+}
+
+
+struct Configuration {
+    static var config: PlistConfig = {
+        guard let url = Bundle.main.url(forResource: "Info", withExtension: "plist") else {
+            fatalError("Couldn't find Info.plist file.")
+        }
+        do {
+            let decoder = PropertyListDecoder()
+            let data = try Data(contentsOf: url)
+            return try decoder.decode(PlistConfig.self, from: data)
+        } catch let error {
+            fatalError("Couldn't parse Config.plist data. \(error.localizedDescription)")
+        }
+    }()
+}
+
+
+struct PlistConfig: Decodable, Encodable {
+    let firebaseApiKey: String
+    let firebaseGcmSenderId: String
+    let firebasePListVersion: String
+    let firebaseBundleId: String
+    let firebaseProjectId: String
+    let firebaseStorageBucket: String
+    let firebaseAppId: String
+    
+    enum CodingKeys: String, CodingKey {
+        case firebaseApiKey = "FIRE_API_KEY"
+        case firebaseGcmSenderId = "FIRE_GCM_SENDER_ID"
+        case firebasePListVersion = "FIRE_PLIST_VERSION"
+        case firebaseBundleId = "FIRE_BUNDLE_ID"
+        case firebaseProjectId = "FIRE_PROJECT_ID"
+        case firebaseStorageBucket = "FIRE_STORAGE_BUCKET"
+        case firebaseAppId = "FIRE_GOOGLE_APP_ID"
+    }
+}
+
+extension PlistConfig {
+    func toJSON() -> String? {
+        let encoder = JSONEncoder()
+        do {
+            let jsonData = try encoder.encode(self)
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            print("jsonString \(jsonString)")
+            return jsonString
+        } catch {
+            print("Error encoding PlistConfig to JSON: \(error)")
+            return nil
+        }
+    }
 }
