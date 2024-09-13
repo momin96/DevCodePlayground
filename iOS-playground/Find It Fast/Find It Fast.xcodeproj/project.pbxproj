@@ -18,7 +18,6 @@
 		504B5C972C94472A00234F39 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 504B5C962C94472A00234F39 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		504B5C992C94472A00234F39 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 504B5C982C94472A00234F39 /* FirebaseAppCheck */; };
 		504B5C9B2C94472A00234F39 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 504B5C9A2C94472A00234F39 /* FirebaseAppDistribution-Beta */; };
-		504B5C9E2C94783400234F39 /* Find-It-Fast-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 504B5C9D2C94783300234F39 /* Find-It-Fast-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +30,6 @@
 		504B5C892C914A3C00234F39 /* config_dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config_dev.xcconfig; sourceTree = "<group>"; };
 		504B5C8A2C914A5500234F39 /* config_prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config_prod.xcconfig; sourceTree = "<group>"; };
 		504B5C8D2C914E5000234F39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		504B5C9D2C94783300234F39 /* Find-It-Fast-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Find-It-Fast-Info.plist"; sourceTree = "<group>"; };
 		504B5C9F2C9478DB00234F39 /* Find-It-Fast-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Find-It-Fast-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -74,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				504B5C9F2C9478DB00234F39 /* Find-It-Fast-Info.plist */,
-				504B5C9D2C94783300234F39 /* Find-It-Fast-Info.plist */,
 				504B5C792C91499400234F39 /* Find_It_FastApp.swift */,
 				504B5C7B2C91499400234F39 /* ContentView.swift */,
 				504B5C7D2C91499400234F39 /* Item.swift */,
@@ -160,7 +157,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				504B5C9E2C94783400234F39 /* Find-It-Fast-Info.plist in Resources */,
 				504B5C832C91499600234F39 /* Preview Assets.xcassets in Resources */,
 				504B5C8E2C914E5000234F39 /* GoogleService-Info.plist in Resources */,
 				504B5C802C91499600234F39 /* Assets.xcassets in Resources */,
