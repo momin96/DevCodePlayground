@@ -87,7 +87,7 @@ struct Configuration {
 }
 
 
-struct PlistConfig: Decodable, Encodable {
+struct PlistConfig: Codable {
     let firebaseApiKey: String
     let firebaseGcmSenderId: String
     let firebasePListVersion: String
@@ -107,7 +107,9 @@ struct PlistConfig: Decodable, Encodable {
     }
 }
 
-extension PlistConfig {
+protocol Jsonable: Encodable { }
+
+extension Jsonable {
     func toJSON() -> String? {
         let encoder = JSONEncoder()
         do {
