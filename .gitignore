@@ -1,2 +1,7 @@
 flutter-playground/.dart_tool
 flutter-playground/build
+iOS-playground/Find It Fast/Find It Fast.xcodeproj/project.xcworkspace/xcuserdata/nasir.xcuserdatad/UserInterfaceState.xcuserstate
+iOS-playground/Find It Fast/config_prod.xcconfig
+iOS-playground/Find It Fast/config_dev.xcconfig
+iOS-playground/Find It Fast/Find It Fast.xcodeproj/xcuserdata/nasir.xcuserdatad/xcschemes/xcschememanagement.plist
+*.xcbkptlist

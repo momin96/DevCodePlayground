@@ -58,14 +58,12 @@ class _IndividualFlashCardState extends State<IndividualFlashCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   bool isFront = true;
-  double _dragPosition = 0.0;
-  final double maxDragDistance = 100.0;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 2500), // Changed to 2.5 seconds
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
   }
@@ -76,43 +74,16 @@ class _IndividualFlashCardState extends State<IndividualFlashCard>
     super.dispose();
   }
 
-  void onDragUpdate(DragUpdateDetails details) {
-    setState(() {
-      bool isDraggingRightToLeft = details.delta.dx < 0;
-
-      if (isFront) {
-        if (isDraggingRightToLeft) {
-          _dragPosition -= details.delta.dx;
-        } else {
-          _dragPosition += details.delta.dx;
-        }
-      } else {
-        if (isDraggingRightToLeft) {
-          _dragPosition += details.delta.dx;
-        } else {
-          _dragPosition -= details.delta.dx;
-        }
-      }
-
-      _controller.value =
-          (_dragPosition / maxDragDistance).clamp(0.0, 1.0).abs();
-    });
-  }
-
-  void onDragEnd(DragEndDetails details) {
-    if (_controller.value > 0.5) {
-      _controller.forward(from: _controller.value);
-      setState(() {
-        isFront = false;
-        _dragPosition = maxDragDistance * _controller.value;
-      });
+  void _flipCard() {
+    if (_controller.isAnimating) return;
+    if (isFront) {
+      _controller.forward();
     } else {
-      _controller.reverse(from: _controller.value);
-      setState(() {
-        isFront = true;
-        _dragPosition = maxDragDistance * _controller.value;
-      });
+      _controller.reverse();
     }
+    setState(() {
+      isFront = !isFront;
+    });
   }
 
   @override
@@ -120,9 +91,7 @@ class _IndividualFlashCardState extends State<IndividualFlashCard>
     return FlashCardWidget(
       content: widget.card.content,
       controller: _controller,
-      onDragUpdate: onDragUpdate,
-      onDragEnd: onDragEnd,
-      dragPosition: _dragPosition,
+      onTap: _flipCard,
     );
   }
 }
@@ -130,27 +99,23 @@ class _IndividualFlashCardState extends State<IndividualFlashCard>
 class FlashCardWidget extends StatelessWidget {
   final String content;
   final AnimationController controller;
-  final Function(DragUpdateDetails) onDragUpdate;
-  final Function(DragEndDetails) onDragEnd;
-  final double dragPosition;
+  final VoidCallback onTap;
 
   const FlashCardWidget({
+    Key? key,
     required this.content,
     required this.controller,
-    required this.onDragUpdate,
-    required this.onDragEnd,
-    required this.dragPosition,
-  });
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onHorizontalDragUpdate: onDragUpdate,
-      onHorizontalDragEnd: onDragEnd,
+      onTap: onTap,
       child: AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
-          final angle = (controller.value * 3.1416) * dragPosition.sign;
+          final angle = controller.value * 3.1416;
           final transform = Matrix4.identity()
             ..setEntry(3, 2, 0.001)
             ..rotateY(angle);
