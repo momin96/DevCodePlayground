@@ -42,3 +42,10 @@ Welcome to the Shorts App, a fun project I developed to get back into UIKit afte
 
 ## Improvements & Feedback
 Check out the repo, explore the code, and feel free to suggest any improvements! 😊
+
+## Demo Time
+
+https://github.com/user-attachments/assets/b436fe55-fba1-461a-b9f8-bb15197b8271
+
+
+
