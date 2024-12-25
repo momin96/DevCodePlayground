@@ -1,3 +1,5 @@
+[![](https://visitcount.itsvg.in/api?id=playLiveDemoRepo&label=Visit%20Count&color=2&icon=5&pretty=false)](https://visitcount.itsvg.in)
+
 # UIKit Play Live Shorts App
 
 Welcome to the Shorts App, a fun project I developed to get back into UIKit after almost 5 years of exclusively using SwiftUI! Inspired by YouTube Shorts, this app lets users swipe up or down to explore videos, view the creator's profile, read comments, and see likes & view counts.
